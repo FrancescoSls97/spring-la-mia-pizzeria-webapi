@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/resources :: head}"></th:block>
+    <title>CicciosPizza</title>
+</head>
+
+<body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container">
+        <hr>
+        <h1 class="text-center">Ciccio's Pizza</h1>
+        <hr>
+
+        <div class="jumbotron p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Ciccio's Pizza</h1>
+                <p class="col-md-8 fs-4 text-outline">
+                    Benvenuto nella nostra pizzeria. Qui potrai gustare i sapori della tradizione verace napoletana
+                </p>
+                <a th:href="@{/pizza}" class="btn btn-primary btn-lg m-1" type="button">
+                    Elenco delle pizze
+                </a>
+                <a th:href="@{/ingrediente}" class="btn btn-primary btn-lg m-1" type="button">
+                    I nostri ingredienti
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <th:block th:replace="~{fragments/resources :: body}"></th:block>
+</body>
+
+</html>

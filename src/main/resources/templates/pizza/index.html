@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/resources :: head}" />
+    <title>Le Nostre Pizze</title>
+</head>
+
+<body>
+    <header>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    </header>
+    <h1 class="text-center fw-bold">Pizze</h1>
+    <hr>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <table class="table" th:if="${pizza.size() > 0}">
+                        <thead>
+                            <tr>
+                                <th>Pizza</th>
+                                <th>Ingredienti</th>
+                                <th>Prezzo</th>
+                                <th>Dettagli</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="pizza : ${pizza}" th:object="${pizza}">
+                                <td>[[*{name}]]</td>
+                                <td>[[*{description}]]</td>
+                                <td>[[*{price}]]</td>
+                                <!--show-->
+                                <td><a th:href="@{/pizza/{id}(id=${pizza.id})}" class="btn btn-primary">Dettgli</a></td>
+                                <!--edit-->>
+                                <td><a th:href="@{/pizza/edit/{id}(id=${pizza.id})}"
+                                        class="btn btn-warning">Modifica</a>
+                                </td>
+                                <!--delete-->
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        th:data-bs-target="'#delete-modal' + ${pizza.id}">
+                                        Elimina
+                                    </button>
+
+                                    <div class="modal fade" th:id="'delete-modal' + ${pizza.id}" tabindex="-1"
+                                        th:attr="aria-labelledby='delete-modal' + ${pizza.id}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Elimina "[[${pizza.name}]]"</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Sei sicuro di voler rimuovere "[[${pizza.name}]]" ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Annulla</button>
+                                                    <form th:action="@{/pizza/delete/{id}(id=${pizza.id})}"
+                                                        method="post">
+                                                        <button class="btn btn-danger text-dark">Elimina</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p th:text="'Ci dispiace, ma al momento non ci sono pizze'" th:unless="${pizza.size() > 0}"></p>
+                    <div class="m-3">
+                        <a th:href="@{/pizza/create}" class="btn btn-primary">Aggiungi una pizza</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="~{fragments/resources :: body}" />
+</body>
+
+</html>

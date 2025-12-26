@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/resources :: head}" />
+    <title>[[${pizza.name}]]</title>
+</head>
+
+<body>
+
+    <header>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    </header>
+
+    <main>
+        <h1 class="fs-1 text-center">[[${pizza.name}]]</h1>
+        <hr>
+        <div class="container">
+
+            <div th:replace="~{fragments/card :: card}"></div>
+            <div class="buttons">
+
+                <a th:href="@{/pizza/{id}/offerta(id=${pizza.id})}" class="btn btn-success m-1">Crea una nuova
+                    offerta</a>
+                <a th:href="@{/pizza}" class="btn btn-warning m-1">Torna all'elenco delle pizze</a>
+            </div>
+        </div>
+        <hr>
+        <!--offerta-->
+        <div class="container">
+            <h2>Offerte su questo prodotto</h2>
+            <table class="table" th:if="${pizza.getOfferta().size() > 0}">
+                <thead>
+                    <tr>
+                        <th>Nome Offerta</th>
+                        <th>Inizio Offerta</th>
+                        <th>Fine Offerta</th>
+                        <th>Descrizione</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="offerta : ${pizza.offerta}">
+                        <td>[[${offerta.nomeOfferta}]]</td>
+                        <td>[[${offerta.inizioOfferta}]]</td>
+                        <td>[[${offerta.fineOfferta}]]</td>
+                        <td>[[${offerta.dettagli}]]</td>
+                        <td><a th:href="@{/offerta/edit/{id}(id=${offerta.id})}" class="btn btn-warning">Modifica
+                                offerta</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p th:text=" 'Non ci sono offerte per questa pizza'" th:unless="${pizza.getOfferta().size() > 0}"></p>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

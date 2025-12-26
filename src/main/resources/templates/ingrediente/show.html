@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/resources :: head}" />
+    <title>Ingrediente</title>
+</head>
+
+<body>
+    <header>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    </header>
+
+    <h1 class="text-center fw-bold">Ingrediente</h1>
+    <hr>
+
+    <main>
+        <div class="container" th:object="${ingrediente}">
+            <div class="row">
+                <div class="col-12">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Descrizione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="*{nomeIngrediente}"></td>
+                                <td th:text="*{descrizioneIngrediente}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <a th:href="@{/ingrediente}" class="btn btn-warning">Torna alla lista</a>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <th:block th:replace="~{fragments/resources :: body}" />
+</body>
+
+</html>

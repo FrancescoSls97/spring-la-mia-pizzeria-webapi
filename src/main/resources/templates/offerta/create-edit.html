@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/resources :: head}" />
+    <title>Aggiungi un' offerta</title>
+</head>
+
+<body>
+    <header>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    </header>
+
+    <h1 class="text-center">Aggiungi un'offerta</h1>
+    <hr>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    <form th:action="${edit} ? @{/offerta/edit/{id}(id=${offerta.id})} : @{/offerta/create}"
+                        th:object="${offerta}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        <!--Nome Offerta-->
+                        <div class="mb-3">
+                            <input type="hidden" th:field="*{pizza.id}">
+                            <label class="form-label" for="nome">Nome offerta</label>
+                            <input class="form-control" type="text" id="nome" th:field="*{nomeOfferta}"
+                                th:errorClass="is-invalid">
+
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeOfferta')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('nomeOfferta')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Data inizio -->
+                        <div class="mb-3">
+                            <label class="form-label" for="inizio">Inizio offerta</label>
+                            <input class="form-control" type="date" id="inizio" th:field="*{inizioOfferta}"
+                                th:errorClass="is-invalid">
+
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('inizioOfferta')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('inizioOfferta')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Data fine -->
+                        <div class="mb-3">
+                            <label class="form-label" for="fine">Fine offerta</label>
+                            <input class="form-control" type="date" id="fine" th:field="*{fineOfferta}"
+                                th:errorClass="is-invalid">
+
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('fineOfferta')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('fineOfferta')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Dettagli -->
+                        <div class="mb-3">
+                            <label class="form-label" for="dettagli">Dettagli</label>
+                            <textarea class="form-control" id="dettagli" th:field="*{dettagli}"
+                                th:errorClass="is-invalid"></textarea>
+
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('dettagli')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('dettagli')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 d-flex">
+                            <input type="submit" class="btn btn-success m-2 p-2"
+                                th:value="${edit} ? 'Modifica offerta' : 'Crea offerta'">
+                            <input type="reset" class="btn btn-danger m-2 p-2" value="Reset">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

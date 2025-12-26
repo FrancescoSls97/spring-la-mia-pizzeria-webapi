@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary p-2" th:fragment="navbar">
+        <div class="container-fluid">
+            <img src="https://img.freepik.com/premium-vector/cute-cartoon-pizza-sliced-logo-template-sign-mascot_864013-2414.jpg?semt=ais_hybrid&w=740&q=80"
+                alt="logo" width="70" height="70" class="m-2">
+            <a class="navbar-brand" th:href="@{/}">
+                Ciccio's Pizza
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/pizza}">Le nostre pizze</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/ingrediente}">I nostri
+                            ingredienti</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>

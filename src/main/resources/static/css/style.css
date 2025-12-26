@@ -1,0 +1,31 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: pink;
+    color: green;
+}
+
+.btn-primary:hover {
+    background-color: pink;
+    color: green;
+}
+
+.jumbotron {
+    background-image: url(https://eataly.fr/cdn/shop/articles/pizza-margherita_d5f76160-e0d9-4c24-a0a8-22a1610d634f.jpg?v=1749545133);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.text-outline {
+    color: white;
+    text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+}

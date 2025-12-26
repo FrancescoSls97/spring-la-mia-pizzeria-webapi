@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/resources :: head}" />
+    <title>Ingredienti</title>
+</head>
+
+<body>
+    <header>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    </header>
+
+    <h1 class="text-center fw-bold">Ingredienti</h1>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table" th:if="${ingredienti.size() > 0}">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Descrizione</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="ingrediente : ${ingredienti}">
+                                <td th:text="${ingrediente.nomeIngrediente}"></td>
+                                <td th:text="${ingrediente.descrizioneIngrediente}"></td>
+                                <!--show-->
+                                <td>
+                                    <a th:href="@{/ingrediente/show/{id}(id=${ingrediente.id})}"
+                                        class="btn btn-primary">Dettagli</a>
+                                </td>
+                                <!--modifica-->>
+                                <td>
+                                    <a th:href="@{/ingrediente/edit/{id}(id=${ingrediente.id})}"
+                                        class="btn btn-warning">Modifica</a>
+                                </td>
+                                <!--delete-->
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        th:data-bs-target="${'#delete-modal-' + ingrediente.id}">
+                                        Elimina
+                                    </button>
+
+                                    <div class="modal fade" th:id="${'delete-modal-' + ingrediente.id}" tabindex="-1"
+                                        th:attr="aria-labelledby=${'delete-modal-' + ingrediente.id}"
+                                        aria-hidden="true">
+
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">
+                                                        Elimina "[[${ingrediente.nomeIngrediente}]]"
+                                                    </h1>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    Sei sicuro di voler rimuovere "[[${ingrediente.nomeIngrediente}]]"?
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Annulla
+                                                    </button>
+
+                                                    <form th:action="@{/ingrediente/delete/{id}(id=${ingrediente.id})}"
+                                                        method="post">
+                                                        <button class="btn btn-danger text-dark">Elimina</button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p th:text="'La lista di ingredienti non è disponibile'" th:unless="${ingredienti.size() > 0}"
+                        class="fs-3"></p>
+
+                    <a th:href="@{/ingrediente/create}" class="btn btn-primary">
+                        Aggiungi ingrediente
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <th:block th:replace="~{fragments/resources :: body}" />
+</body>
+
+</html>

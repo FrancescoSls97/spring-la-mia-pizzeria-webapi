@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/resources :: head}" />
+    <title>Aggiungi un ingrediente</title>
+</head>
+
+<body>
+    <header>
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    </header>
+
+    <h1 class="text-center">Aggiungi un ingrediente</h1>
+    <hr>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form th:action="${edit} ? @{/ingrediente/edit/{id}(id=${ingrediente.id})} : @{/ingrediente/create}"
+                        th:object="${ingrediente}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        <!--Nome Ingrediente-->
+                        <div class="mb-3">
+                            <label class="form-label" for="nome">Nome ingrediente</label>
+                            <input class="form-control" type="text" id="nome" th:field="*{nomeIngrediente}"
+                                th:errorClass="is-invalid">
+
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeIngrediente')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('nomeIngrediente')}" th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Descrizione -->
+                        <div class="mb-3">
+                            <label class="form-label" for="dettagli">Dettagli</label>
+                            <textarea class="form-control" id="dettagli" th:field="*{descrizioneIngrediente}"
+                                th:errorClass="is-invalid"></textarea>
+
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('descrizioneIngrediente')}">
+                                <ul>
+                                    <li th:each="error : ${#fields.errors('descrizioneIngrediente')}"
+                                        th:text="${error}"></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 d-flex">
+                            <input type="submit" class="btn btn-success m-2 p-2"
+                                th:value="${edit} ? 'Modifica ingrediente' : 'Aggiungi ingrediente'">
+                            <input type="reset" class="btn btn-danger m-2 p-2" value="Reset">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>
