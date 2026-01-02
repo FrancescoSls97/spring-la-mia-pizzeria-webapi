@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.lessons.java.spring_la_mia_pizzeria_webapi.models.Offerta;
 import org.lessons.java.spring_la_mia_pizzeria_webapi.models.Pizza;
-import org.lessons.java.spring_la_mia_pizzeria_webapi.repo.PizzaRepository;
+import org.lessons.java.spring_la_mia_pizzeria_webapi.services.PizzaService;
 import org.lessons.java.spring_la_mia_pizzeria_webapi.repo.IngredienteRepository;
 import org.lessons.java.spring_la_mia_pizzeria_webapi.repo.OffertaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 public class PizzaController {
 
     @Autowired
-    private PizzaRepository pizzaRepository;
+    private PizzaService pizzaService;
 
     @Autowired
     private OffertaRepository offertaRepository;
@@ -35,7 +35,7 @@ public class PizzaController {
     // index
     @GetMapping
     public String index(Model model) {
-        List<Pizza> pizza = pizzaRepository.findAll();
+        List<Pizza> pizza = pizzaService.findAll();
         model.addAttribute("pizza", pizza);
         return "pizza/index";
     }
@@ -43,7 +43,7 @@ public class PizzaController {
     // show
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
-        Pizza pizza = pizzaRepository.findById(id).get();
+        Pizza pizza = pizzaService.getById(id);
         model.addAttribute("pizza", pizza);
         return "pizza/show";
     }
@@ -66,14 +66,14 @@ public class PizzaController {
             return "pizza/create";
         }
         // salvataggio dati
-        pizzaRepository.save(formPizza);
+        pizzaService.create(formPizza);
         return "redirect:/pizza";
     }
 
     // edit view
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("pizza", pizzaRepository.findById(id).get());
+        model.addAttribute("pizza", pizzaService.getById(id));
         model.addAttribute("ingredienti", ingredienteRepository.findAll());
         return "pizza/edit";
     }
@@ -86,25 +86,26 @@ public class PizzaController {
             return "pizza/edit";
         }
         // salvataggio dati
-        pizzaRepository.save(formPizza);
+        pizzaService.update(formPizza);
         return "redirect:/pizza";
     }
 
     // delete
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        Pizza pizza = pizzaRepository.findById(id).get();
+        Pizza pizza = pizzaService.getById(id);
         for (Offerta offerta : pizza.getOfferta()) {
             offertaRepository.delete(offerta);
         }
-        pizzaRepository.deleteById(id);
+        pizzaService.delete(pizza);
+        ;
         return "redirect:/pizza";
     }
 
     @GetMapping("/{id}/offerta")
     public String offerta(@PathVariable Integer id, Model model) {
         Offerta offerta = new Offerta();
-        offerta.setPizza(pizzaRepository.findById(id).get());
+        offerta.setPizza(pizzaService.getById(id));
         model.addAttribute("offerta", offerta);
         return "offerta/create-edit";
     }
